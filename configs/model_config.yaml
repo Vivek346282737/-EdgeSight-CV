@@ -1,0 +1,27 @@
+﻿model_pipeline:
+  task: "object_detection_and_tracking"
+  architectures:
+    primary: "YOLOv8n"
+    alternatives: ["Faster-RCNN", "MobileNetV4-SSD"]
+  
+runtimes:
+  pytorch:
+    enabled: true
+    precision: "fp32"
+  onnx_runtime:
+    enabled: true
+    execution_provider: "CPUExecutionProvider"
+    opset: 18
+  openvino:
+    target_hardware: "CPU"
+    quantization: "INT8"
+  tensorrt:
+    target_gpu: "NVIDIA-T4/Jetson"
+    precision: "FP16"
+
+complex_event_processing:
+  polygon_filter: "ray_casting_pointPolygonTest"
+  temporal_dwell_threshold_seconds: 2.0
+  active_learning_thresholds:
+    confidence_min: 0.30
+    confidence_max: 0.55
